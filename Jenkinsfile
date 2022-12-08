@@ -4,6 +4,7 @@ pipeline {
     stages {
         stage('docker down') {
             steps {
+                pwd
                 echo 'docker compose down..'
                 sh 'docker-compose down'
             }
