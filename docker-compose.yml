@@ -1,0 +1,7 @@
+version: "3"
+
+services:
+  blog-front:
+    build: .
+    ports:
+      - "8080:8080"
