@@ -6,7 +6,7 @@ pipeline {
 				script{
 					try{
 						withAWS() {
-							sh 'aws s3 cp ${RESULT_NAME}.zip ${S3_DESTNATION}'
+							s3Upload(file:'Jenkinsfile', bucket:'${S3_DESTNATION}', path:'/')
 						}
 					} catch(error){
 						print(error)
