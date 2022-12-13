@@ -5,7 +5,7 @@ pipeline {
 			steps{
 				script{
 					try{
-						withAWS() {
+						withAWS(region:'ap-northeast-1') {
 							s3Upload(file:'Jenkinsfile', bucket:'osakabluesblog', path:'test')
 						}
 					} catch(error){
