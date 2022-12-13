@@ -5,7 +5,7 @@ pipeline {
 			steps{
 				script{
 					try{
-						WithAWS() {
+						withAWS() {
 							sh 'aws s3 cp ${RESULT_NAME}.zip ${S3_DESTNATION}'
 						}
 					} catch(error){
