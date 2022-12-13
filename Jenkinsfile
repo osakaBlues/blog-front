@@ -6,7 +6,7 @@ pipeline {
 				script{
 					try{
 						withAWS() {
-							s3Upload(file:'Jenkinsfile', bucket:'osakabluesblog', path:'/')
+							s3Upload(file:'Jenkinsfile', bucket:'osakabluesblog', path:'test')
 						}
 					} catch(error){
 						print(error)
