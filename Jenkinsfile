@@ -1,16 +1,32 @@
+def errorHendler(error) {
+	print(error)
+	env.cloneResult = false
+	currentBuild.result = 'FAILURE'
+}
+
 pipeline {
 	agent any
+	tools {nodejs 'nodejs'}
 	stages {
 		stage('build'){
 			steps{
 				script{
 					try{
-						yarn 'install'
-						yarn 'build'
+						sh 'yarn install'
+						sh 'yarn build'
 	 				} catch(error){
-						print(error)
-						env.cloneResult = false
-						currentBuild.result = 'FAILURE'
+						errorHendler(error)
+					}
+				}
+			}
+		}
+		stage('zip files'){
+			steps{
+				script{
+					try {
+						sh 'tar  -cvf  front.tar .'
+					} catch (error) {
+						errorHendler(error)
 					}
 				}
 			}
@@ -20,12 +36,10 @@ pipeline {
 				script{
 					try{
 						withAWS(region:'ap-northeast-1') {
-							s3Upload(file:'./', bucket:'osakabluesblog', path:'result')
+							s3Upload(file:'front.tar', bucket:'osakabluesblog', path:'result')
 						}
 					} catch(error){
-						print(error)
-						env.cloneResult = false
-						currentBuild.result = 'FAILURE'
+						errorHendler(error)
 					}
 				}
 			}
