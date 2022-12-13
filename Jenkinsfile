@@ -36,7 +36,7 @@ pipeline {
 				script{
 					try{
 						withAWS(region:'ap-northeast-1') {
-							s3Upload(file:'front.tar', bucket:'osakabluesblog', path:'result')
+							s3Upload(file:'front.tar', bucket:'osakabluesblog', path:'result.tar')
 						}
 					} catch(error){
 						errorHendler(error)
