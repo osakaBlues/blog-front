@@ -20,7 +20,6 @@ function Home({ API_URL }: { API_URL: string }) {
 				</li>
 			</ul>
 			<h1>Blog Home</h1>
-			<h1>{API_URL}</h1>
 		</div>
 	);
 }
