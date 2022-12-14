@@ -44,5 +44,28 @@ pipeline {
 				}
 			}
 		}
+    stage('deploy to EC2'){
+      steps{
+        script{
+          try{
+            withAWS(region:'ap-northeast-1') {
+              createDeployment(
+                applicationName: 'OsakaBluesblog',
+                deploymentGroupName: 'blog-group',
+                deploymentConfigName: 'CodeDeployDefault.OneAtATime',
+                description: 'test deploy to front',
+                waitForCompletion: true,
+                s3Bucket: 'osakabluesblog',
+                s3Key: 'front.tar',
+                s3BundleType: 'tar',
+                fileExistsBehavior: 'OVERWRITE',
+              )
+            }
+          } catch(error){
+            errorHendler(error)
+          }
+        }
+      }
+    }
 	}
 }
