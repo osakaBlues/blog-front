@@ -7,6 +7,9 @@ def errorHendler(error) {
 pipeline {
 	agent any
 	tools {nodejs 'nodejs'}
+  options {
+    withAWS(credentials:'aws_key')
+  }
 	stages {
 		stage('build'){
 			steps{
