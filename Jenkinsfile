@@ -27,7 +27,7 @@ pipeline {
 			steps{
 				script{
 					try {
-						sh 'tar  -cvf  front.tar .'
+						sh 'tar  -cvf  front.tar . > /dev/null'
 					} catch (error) {
 						errorHendler(error)
 					}
