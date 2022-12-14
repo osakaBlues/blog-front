@@ -35,7 +35,7 @@ pipeline {
       steps{
         script{
           try {
-            sh 'tar  -cvf  ${params.RESULT_NAME}.${params.RESULT_TYPE} . > /dev/null'
+            sh "tar  -cvf  ${params.RESULT_NAME}.${params.RESULT_TYPE} . > /dev/null"
           } catch (error) {
             errorHendler(error)
           }
@@ -46,11 +46,11 @@ pipeline {
       steps{
         script{
           try{
-            withAWS(region:'${params.REGION}') {
+            withAWS(region:"${params.REGION}") {
               s3Upload(
-                file:'${params.RESULT_NAME}.${params.RESULT_TYPE}',
-                bucket:'${params.BUCKET_NAME}',
-                path:'${params.RESULT_NAME}.${params.RESULT_TYPE}')
+                file:"${params.RESULT_NAME}.${params.RESULT_TYPE}",
+                bucket:"${params.BUCKET_NAME}",
+                path:"${params.RESULT_NAME}.${params.RESULT_TYPE}")
             }
           } catch(error){
             errorHendler(error)
@@ -62,16 +62,16 @@ pipeline {
       steps{
         script{
           try{
-            withAWS(region:'${params.REGION}') {
+            withAWS(region:"${params.REGION}") {
               createDeployment(
-                applicationName: '${params.APPLICATION_NAME}',
-                deploymentGroupName: '${params.DEPLOYMENT_GROUP_NAME}',
+                applicationName: "${params.APPLICATION_NAME}",
+                deploymentGroupName: "${params.DEPLOYMENT_GROUP_NAME}",
                 deploymentConfigName: 'CodeDeployDefault.OneAtATime',
                 description: 'test deploy to front',
                 waitForCompletion: true,
-                s3Bucket: '${params.BUCKET_NAME}',
-                s3Key: '${params.RESULT_NAME}.${params.RESULT_TYPE}',
-                s3BundleType: '${params.RESULT_TYPE}',
+                s3Bucket: "${params.BUCKET_NAME}",
+                s3Key: "${params.RESULT_NAME}.${params.RESULT_TYPE}",
+                s3BundleType: "${params.RESULT_TYPE}",
                 fileExistsBehavior: 'OVERWRITE',
               )
             }
