@@ -1,3 +1,3 @@
 #!/bin/sh
 echo "stoping..."
-# pm2 kill blog-front
+# pm2 delete blog-front
