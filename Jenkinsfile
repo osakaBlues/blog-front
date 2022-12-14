@@ -27,6 +27,7 @@ pipeline {
       steps{
         script{
           try {
+            sh "rm *.${RESULT_TYPE}"
             sh "tar  -cvf  ${RESULT_NAME}.${RESULT_TYPE} . > /dev/null"
           } catch (error) {
             errorHendler(error)
