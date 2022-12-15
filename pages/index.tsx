@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function Home() {
+function Home({ API_URL }: { API_URL: string }) {
 	return (
 		<div>
 			<ul>
@@ -23,3 +23,14 @@ export default function Home() {
 		</div>
 	);
 }
+
+export async function getStaticProps() {
+	const API_URL = process.env.API_URL;
+	return {
+		props: {
+			API_URL,
+		},
+	};
+}
+
+export default Home;
