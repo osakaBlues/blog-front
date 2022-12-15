@@ -1,6 +1,11 @@
+import axios from "axios";
 import Link from "next/link";
 
-function Home({ API_URL }: { API_URL: string }) {
+function Home({ memos }: any) {
+	const handlePost = ({ title, content }: any) => {
+		axios.post("http://localhost:3000/api/memo", { title, content });
+	};
+
 	return (
 		<div>
 			<ul>
@@ -20,15 +25,28 @@ function Home({ API_URL }: { API_URL: string }) {
 				</li>
 			</ul>
 			<h1>Blog Home</h1>
+			{memos &&
+				memos.map((memo: any) => (
+					<div key={memo.id}>
+						<h2>{memo.title}</h2>
+						<p>{memo.content}</p>
+					</div>
+				))}
+			<form onSubmit={handlePost}>
+				<input type="text" name="title" />
+				<input type="text" name="content" />
+				<button type="submit">Submit</button>
+			</form>
 		</div>
 	);
 }
 
-export async function getStaticProps() {
-	const API_URL = process.env.API_URL;
+export async function getServerSideProps() {
+	const res = await axios.get("http://localhost:3000/api/memo");
+	const memos = res.data;
 	return {
 		props: {
-			API_URL,
+			memos,
 		},
 	};
 }

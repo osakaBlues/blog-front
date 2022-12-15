@@ -28,7 +28,7 @@ pipeline {
         script{
           try {
             sh "rm *.${RESULT_TYPE}"
-            sh "tar  -cvf  ${RESULT_NAME}.${RESULT_TYPE} . > /dev/null"
+            sh "tar  -cf  ${RESULT_NAME}.${RESULT_TYPE} ."
           } catch (error) {
             errorHendler(error)
           }
