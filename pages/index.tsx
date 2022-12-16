@@ -1,9 +1,22 @@
 import axios from "axios";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { useState } from "react";
 
 function Home({ memos }: any) {
-	const handlePost = ({ title, content }: any) => {
+	const [title, setTitle] = useState("");
+	const [content, setContent] = useState("");
+
+	const router = useRouter();
+
+	const handlePost = (e: any) => {
+		e.preventDefault();
 		axios.post("http://localhost:3000/api/memo", { title, content });
+
+		setTitle("");
+		setContent("");
+		alert("작성되었습니다.");
+		router.push("/");
 	};
 
 	return (
@@ -25,6 +38,21 @@ function Home({ memos }: any) {
 				</li>
 			</ul>
 			<h1>Blog Home</h1>
+			<form onSubmit={handlePost}>
+				<input
+					type="text"
+					placeholder="제목"
+					value={title}
+					onChange={(e) => setTitle(e.target.value)}
+				/>
+				<input
+					type="text"
+					placeholder="내용"
+					value={content}
+					onChange={(e) => setContent(e.target.value)}
+				/>
+				<button type="submit">작성</button>
+			</form>
 			{memos &&
 				memos.map((memo: any) => (
 					<div key={memo.id}>
@@ -32,11 +60,6 @@ function Home({ memos }: any) {
 						<p>{memo.content}</p>
 					</div>
 				))}
-			<form onSubmit={handlePost}>
-				<input type="text" name="title" />
-				<input type="text" name="content" />
-				<button type="submit">Submit</button>
-			</form>
 		</div>
 	);
 }
