@@ -11,7 +11,7 @@ function Home({ memos }: any) {
 
 	const handlePost = (e: any) => {
 		e.preventDefault();
-		axios.post("http://osakablues/api/memo", { title, content });
+		axios.post("/api/memo", { title, content });
 
 		setTitle("");
 		setContent("");
@@ -65,7 +65,7 @@ function Home({ memos }: any) {
 }
 
 export async function getServerSideProps() {
-	const res = await axios.get("http://osakablues/api/memo");
+	const res = await axios.get("/api/memo");
 	const memos = res.data;
 	return {
 		props: {

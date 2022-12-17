@@ -6,3 +6,14 @@ const nextConfig = {
 };
 
 module.exports = nextConfig;
+
+module.exports = {
+	async rewrites() {
+		return [
+			{
+				source: "/api/:path*",
+				destination: "http://osakablues.site/api/:path*",
+			},
+		];
+	},
+};
