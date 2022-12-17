@@ -6,7 +6,7 @@ import { useState } from "react";
 
 const url = "http://osakablues.site/api/memo";
 
-function Home({ memos, errorCode }: any) {
+function Home({ memos, errorCode, req }: any) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
@@ -14,7 +14,10 @@ function Home({ memos, errorCode }: any) {
 
   const handlePost = (e: any) => {
     e.preventDefault();
-    axios.post(url, { title, content });
+    axios.post("/api/memo", {
+      title,
+      content,
+    });
 
     setTitle("");
     setContent("");
@@ -69,14 +72,10 @@ function Home({ memos, errorCode }: any) {
   );
 }
 
-export async function getServerSideProps() {
-  const res = await fetch(url);
-  const errorCode = res.ok ? false : res.status;
-  const json = errorCode ? await res.json() : [];
-  console.log(res);
-
+export async function getServerSideProps({ req }: any) {
+  const res = await axios.get("/api/memo");
   return {
-    props: { errorCode, memos: json },
+    props: { memos: res, req },
   };
 }
 
