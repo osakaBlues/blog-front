@@ -5,6 +5,11 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 
 const url = "http://osakablues.site/api/memo";
+const cfg = {
+  headers: {
+    referer: "http://osakablues.site",
+  },
+};
 
 function Home({ memos, errorCode, req }: any) {
   const [title, setTitle] = useState("");
@@ -15,6 +20,7 @@ function Home({ memos, errorCode, req }: any) {
   const handlePost = (e: any) => {
     e.preventDefault();
     axios.post("/api/memo", {
+      cfg,
       title,
       content,
     });
@@ -73,7 +79,7 @@ function Home({ memos, errorCode, req }: any) {
 }
 
 export async function getServerSideProps({ req }: any) {
-  const res = await axios.get("/api/memo");
+  const res = await axios.get("/api/memo", cfg);
   return {
     props: { memos: res, req },
   };
