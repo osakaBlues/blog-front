@@ -14,11 +14,11 @@ const nextConfig = {
   async headers() {
     return [
       {
-        source: ":origin/api/*",
+        source: "/api/:path*",
         headers: [
           {
             key: "referer",
-            vlaue: "http://osakablues.site",
+            value: "http://osakablues.site",
           },
         ],
       },
