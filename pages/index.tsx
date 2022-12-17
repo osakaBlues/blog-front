@@ -72,7 +72,8 @@ function Home({ memos, errorCode }: any) {
 export async function getServerSideProps() {
   const res = await fetch(url);
   const errorCode = res.ok ? false : res.status;
-  const json = await res.json();
+  const json = errorCode ? await res.json() : [];
+  console.log(res);
 
   return {
     props: { errorCode, memos: json },
