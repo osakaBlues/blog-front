@@ -14,10 +14,7 @@ function Home({ memos, errorCode, req }: any) {
 
   const handlePost = (e: any) => {
     e.preventDefault();
-    axios.post(url, {
-      headers: {
-        referer: "osakablues.site",
-      },
+    axios.post("/api/memo", {
       title,
       content,
     });
@@ -76,13 +73,7 @@ function Home({ memos, errorCode, req }: any) {
 }
 
 export async function getServerSideProps({ req }: any) {
-  const res = await axios.get("http://localhost/hello", {
-    headers: {
-      referer: "osakablues.site",
-    },
-  });
-  console.log(req.header);
-
+  const res = await axios.get("/api/memo");
   return {
     props: { memos: res, req },
   };
