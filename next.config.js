@@ -8,19 +8,17 @@ const nextConfig = {
       {
         source: "/api/:path*",
         destination: "http://osakablues.site/api/:path*",
-        headers: [
-          {
-            key: "referer",
-            value: "http://osakablues.site",
-          },
-        ],
       },
+    ];
+  },
+  async headers() {
+    return [
       {
         source: ":origin/api/*",
         headers: [
           {
             key: "referer",
-            value: ":origin",
+            vlaue: "http://osakablues.site",
           },
         ],
       },
