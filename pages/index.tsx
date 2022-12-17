@@ -19,7 +19,7 @@ function Home({ memos, errorCode, req }: any) {
 
   const handlePost = (e: any) => {
     e.preventDefault();
-    axios.post("http://osakablues.site/api/memo", {
+    axios.post(url, {
       cfg,
       title,
       content,
@@ -78,10 +78,13 @@ function Home({ memos, errorCode, req }: any) {
   );
 }
 
-export async function getServerSideProps({ req }: any) {
-  const res = await axios.get("http://osakablues.site/api/memo", cfg);
+export async function getServerSideProps() {
+  const res = await axios.get(url, cfg);
+  const memos = res.data;
   return {
-    props: { memos: res, req },
+    props: {
+      memos,
+    },
   };
 }
 
